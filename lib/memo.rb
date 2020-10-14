@@ -1,9 +1,17 @@
 class Memo < Post
   def read_from_console
-    super
+    line = nil
+
+    puts "Новая заметка, все что пишется до строки 'end':"
+
+    until line == 'end'
+      line = STDIN.gets.chomp
+      @text << line
+    end
+    @text.pop
   end
 
-  def file
-
+  def components
+    @text.unshift(time_string)
   end
 end

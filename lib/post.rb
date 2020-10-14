@@ -1,14 +1,28 @@
 class Post
+  def self.descendants
+    # Returns true if mod is a subclass of other
+    ObjectSpace.each_object(Class).select { |klass| klass < self }
+  end
+
+  def self.create(index)
+    descendants[index].new
+  end
+
   def initialize
-    @text = text
+    @text = []
     @created_at = Time.now
   end
 
-  def read_from_console
+  def time_string
+    "Создано: #{@created_at.strftime('%Y.%m.%d, %H:%M:%S')} \n"
   end
 
-  def save
-    File.write("#{__dir__}/#{file_name}", file)
+  def read_from_console; end
+
+  def components; end
+
+  def save(path)
+    File.write("#{path}/#{file_name}", components.join("\n"))
   end
 
   def file_name
